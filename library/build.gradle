@@ -1,8 +1,29 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.github.dcendents.android-maven'
 
-group = 'com.github.kobakei'
+ext {
+    bintrayRepo = 'Android' // Repo name in bintray dashboard
+    bintrayName = 'MaterialFabSpeedDial' // package name of the bintray repo
+
+    publishedGroupId = 'dk.eleknet.android'   // this is the ID we want to see in implementation line
+    libraryName = 'MaterialFabSpeedDial'     // this is the module name of library
+    artifact = 'MaterialFabSpeedDial'        // this is the artifact we want to see in implementation line
+
+    libraryDescription = 'MaterialFabSpeedDial fork' // description of library
+
+    siteUrl = 'https://github.com/elek90/MaterialFabSpeedDial'    // git repo url
+    gitUrl = 'https://github.com/elek90/MaterialFabSpeedDial.git' // git repo vcs url
+
+    libraryVersion = '1.0.0'      // library version
+
+    developerId = 'elek90'                              // This is your bintray username
+    developerName = 'Alexander Murillo'                 // Developer's name
+    developerEmail = 'alexandersalemander@gmail.com'    // Developer's email
+
+    licenseName = 'The Apache Software License, Version 2.0'  // for example, The Apache Software License, Version 2.0
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'   // for example, http://www.apache.org/licenses/LICENSE-2.0.txt
+    allLicenses = ["Apache-2.0"]    // array of licenses, for example, ["Apache-2.0"]
+}
 
 android {
     compileSdkVersion 29
@@ -40,29 +61,8 @@ dependencies {
     })
 }
 
-// build a jar with source files
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-task javadoc(type: Javadoc) {
-    failOnError  false
-    source = android.sourceSets.main.java.sourceFiles
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    classpath += configurations.compile
-}
-
-// build a jar with javadoc
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar
-    archives javadocJar
-}
 repositories {
     mavenCentral()
 }
+
+apply from: 'publish.gradle'
